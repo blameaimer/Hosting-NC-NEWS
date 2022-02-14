@@ -11,7 +11,16 @@ afterAll(() => {
   });
 //
 
-
+ describe('Invalid path error test', () => {
+    test('this should response with a 404 status and a msg body', () => {
+    return request(app)
+    .get("/api/teatasd")
+    .expect(404)  
+    .then((response) => {
+      expect(response.error.text).toBe('Path not found!');
+    });
+})
+  });
 describe("/api/topics", () => {
     describe("GET", () => {
     test("should return an object containing all slugs and descriptions ", () => {
@@ -31,16 +40,7 @@ describe("/api/topics", () => {
         });
     });
   });
-  describe('Invalid path error test', () => {
-    test('this should response with a 404 status and a msg body', () => {
-    return request(app)
-    .get("/api/teatasd")
-    .expect(404)  
-    .then((response) => {
-      expect(response.error.text).toBe('Path not found!');
-    });
-})
-  });
+ 
   });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
@@ -147,3 +147,21 @@ describe("/api/topics", () => {
     });
   });
 })
+describe('/api/users', () => {
+
+    describe('GET', () => {
+        test.only('should return an array of usernames', () => {
+            return request(app)
+            .get("/api/users")
+            .expect(200)
+            .then((response) => {
+                response.body.users.forEach((user) => {
+                  expect(user).toEqual({
+                        username: expect.any(String)
+                  })
+                });
+        });
+    });
+
+})
+});

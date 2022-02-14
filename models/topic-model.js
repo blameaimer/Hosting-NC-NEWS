@@ -53,3 +53,9 @@ exports.updateArticleById = (id, voteUpdate) => {
       return Promise.reject(err);
     });
 };
+
+exports.selectUsers=()=>{
+  return db.query(`SELECT username FROM users`).then(({ rows }) => {
+    return rows;
+  });
+}
