@@ -64,7 +64,7 @@ describe("/api/topics", () => {
             });
         })
           });
-          test.only('test for descending order by title as it was not specified in the ticket', () => {
+          test('test for descending order by title as it was not specified in the ticket', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
