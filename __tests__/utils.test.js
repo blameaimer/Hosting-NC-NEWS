@@ -122,14 +122,12 @@ describe("/api/topics", () => {
       .get("/api/topics")
       .expect(200)
       .then((response) => {
-
         expect(response.body.topics).toHaveLength(3);
         response.body.topics.forEach((topic) => {
           expect(topic).toEqual(
             {
               slug: expect.any(String),
               description: expect.any(String),
-
             })
           
         });

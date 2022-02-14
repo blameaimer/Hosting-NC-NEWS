@@ -7,8 +7,6 @@ app.use(express.json());
 app.get("/api/topics", getTopics)
 
 
-
-
 app.use("/api/*",(req,res)=>{
     res.status(404).send('Path not found!');
 })
