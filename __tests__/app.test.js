@@ -42,9 +42,42 @@ describe("/api/topics", () => {
   });
  
   });
+  describe('/api/articles', () => {
+      describe('GET', () => {
+          test('return an object containing all articles ', () => {
+            return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then((response) => {
+                
+                response.body.articles.forEach((article) => {
+                expect(article).toEqual(
+                  {
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    body: expect.any(String),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number)
+                  })
+            });
+        })
+          });
+          test.only('test for descending order by title as it was not specified in the ticket', () => {
+            return request(app)
+            .get("/api/articles")
+            .expect(200)
+            .then((response) => {
+            expect(response.body.articles).toBeSorted({key:'title',descending:true})
+          });
+        })
+      });
+      
+  });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
-    test("should return an object containing a particular topic ", () => {
+    test("should return an object containing a particular article ", () => {
         return request(app)
           .get("/api/articles/1")
           .expect(200)
@@ -145,12 +178,27 @@ describe("/api/topics", () => {
          });
         
     });
+    test('the patch body has an invalid key', () => {
+        const anotherVote = {
+            votez : "fds"
+        }
+        return request(app)
+        .patch('/api/articles/4')
+        .send(anotherVote)
+        .expect(400)
+        .then((response) => {
+            const {msg} = response._body
+           expect(msg).toBe('Bad Request');
+         });
+        
+    });
   });
+ 
 })
 describe('/api/users', () => {
 
     describe('GET', () => {
-        test.only('should return an array of usernames', () => {
+        test('should return an array of usernames', () => {
             return request(app)
             .get("/api/users")
             .expect(200)
