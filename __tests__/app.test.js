@@ -91,9 +91,19 @@ describe("/api/topics", () => {
                   body: expect.any(String),
                   topic: expect.any(String),
                   created_at: expect.any(String),
-                  votes: expect.any(Number)
+                  votes: expect.any(Number),
+                  comment_count: expect.any(String)
                 })
+                
           });
+      });
+      test('this is a test to see if a specific article has the appropriate comment count length', () => {
+        return request(app)
+        .get("/api/articles/1")
+        .expect(200).then((response)=>{
+          expect(response.body.article.comment_count).toBe("11")
+        })
+        
       });
       test('this is a test which requests an invalid articleId surrounded by quotation marks and expects a 400 response', () => {
           return request(app)
@@ -113,13 +123,13 @@ describe("/api/topics", () => {
           expect(msg).toBe('Bad Request');
         });
     });
-    test('requests a non existing topic', () => {
+    test('requests a non existing article', () => {
         return request(app)
         .get("/api/articles/69")
         .expect(404)    
         .then((response) => {
            const {msg} = response.body
-          expect(msg).toBe('No topic found for id: 69');
+          expect(msg).toBe('No article found for id: 69');
         });
     });
     });
@@ -175,7 +185,7 @@ describe("/api/topics", () => {
         .expect(404)
         .then((response) => {
             const {msg} = response.body
-           expect(msg).toBe('No topic found for id: 252525')
+           expect(msg).toBe('No article found for id: 252525')
          });
         
     });
@@ -214,4 +224,33 @@ describe('/api/users', () => {
     });
 
 })
+});
+
+describe('/api/articles/:article_id/comments', () => {
+
+  describe('GET', () => {
+
+    test('return an object containing all comments for a particular article ', () => {
+      return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      
+      .then((response) => {
+          expect(response.body.comments).toHaveLength(11);
+          response.body.comments.forEach((comment) => {
+          expect(comment).toEqual(
+            {
+              comment_id: expect.any(Number),
+              votes: expect.any(Number),
+              created_at: expect.any(String),
+              author: expect.any(String), 
+              body: expect.any(String)
+            })
+
+      });
+  })
+})
+    
+});
+  
 });

@@ -4,25 +4,26 @@ const db = require("../db/connection");
 exports.selectArticleById = (id) => {
   return db
     .query(
-      `SELECT author,title,article_id,body,topic,created_at,votes 
+      `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comments.body) AS comment_count
 FROM articles 
 JOIN users ON articles.author = users.username
-WHERE article_id = $1`
+LEFT JOIN comments ON articles.article_id = comments.article_id
+WHERE articles.article_id = $1
+GROUP BY articles.article_id,articles.author,title`
     ,[id])
     .then(({ rows }) => {
-      const topic = rows[0];
-      if (!topic) {
+      const article = rows[0];
+      if (!article) {
         return Promise.reject({
           status: 404,
-          msg: `No topic found for id: ${id}`,
+          msg: `No article found for id: ${id}`,
         });
       }
-      return topic;
+      return article;
     })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
 };
+
+
 exports.selectArticles = () => {
   return db
     .query(
@@ -34,9 +35,6 @@ ORDER BY title DESC
     .then(({ rows }) => {
       return rows;
     })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
 };
 
 exports.updateArticleById = (id, voteUpdate) => {
@@ -50,16 +48,14 @@ exports.updateArticleById = (id, voteUpdate) => {
       RETURNING *;`,[vote,id]
     )
     .then(({ rows }) => {
-      const topic = rows[0];
-      if (!topic) {
+      const article = rows[0];
+      if (!article) {
         return Promise.reject({
           status: 404,
-          msg: `No topic found for id: ${id}`,
+          msg: `No article found for id: ${id}`,
         });
       }
-      return topic;
+      return article;
     })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
+
 };
