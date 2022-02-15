@@ -1,9 +1,10 @@
 const express = require("express");
 const app = express();
 
-const {getTopics,getArticleById,patchArticleById,getUsers,getArticles} = require('./controllers/topic-controller')
+const {getTopics} = require('./controllers/topic-controller')
 const {handleInvalidPaths,handlePSQLErrors,handleServerErrors,handleCustomErrors} = require('./errors/index')
-
+const {getArticleById,patchArticleById,getArticles} = require('./controllers/article-controller')
+const {getUsers} = require('./controllers/user-controller')
 
 
 app.use(express.json());

@@ -48,8 +48,9 @@ describe("/api/topics", () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
+            
             .then((response) => {
-                
+              expect(response.body.articles).toHaveLength(12);
                 response.body.articles.forEach((article) => {
                 expect(article).toEqual(
                   {
@@ -99,7 +100,7 @@ describe("/api/topics", () => {
           .get("/api/articles/'notanid'")
           .expect(400)    
           .then((response) => {
-            const {msg} = response._body
+            const {msg} = response.body
             expect(msg).toBe('Bad Request');
           });
       });
@@ -108,7 +109,7 @@ describe("/api/topics", () => {
         .get("/api/articles/notanid")
         .expect(400)    
         .then((response) => {
-           const {msg} = response._body
+           const {msg} = response.body
           expect(msg).toBe('Bad Request');
         });
     });
@@ -117,7 +118,7 @@ describe("/api/topics", () => {
         .get("/api/articles/69")
         .expect(404)    
         .then((response) => {
-           const {msg} = response._body
+           const {msg} = response.body
           expect(msg).toBe('No topic found for id: 69');
         });
     });
@@ -158,7 +159,7 @@ describe("/api/topics", () => {
         .send(anotherVote)
         .expect(400)
         .then((response) => {
-            const {msg} = response._body
+            const {msg} = response.body
            expect(msg).toBe('Bad Request');
          });
         
@@ -173,7 +174,7 @@ describe("/api/topics", () => {
         .send(newVote)
         .expect(404)
         .then((response) => {
-            const {msg} = response._body
+            const {msg} = response.body
            expect(msg).toBe('No topic found for id: 252525')
          });
         
@@ -187,7 +188,7 @@ describe("/api/topics", () => {
         .send(anotherVote)
         .expect(400)
         .then((response) => {
-            const {msg} = response._body
+            const {msg} = response.body
            expect(msg).toBe('Bad Request');
          });
         
@@ -203,6 +204,7 @@ describe('/api/users', () => {
             .get("/api/users")
             .expect(200)
             .then((response) => {
+              expect(response.body.users).toHaveLength(4);
                 response.body.users.forEach((user) => {
                   expect(user).toEqual({
                         username: expect.any(String)
