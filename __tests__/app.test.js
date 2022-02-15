@@ -222,7 +222,7 @@ describe('/api/articles/:article_id/comments', () => {
 
   describe('GET', () => {
 
-    test.only('return an object containing all comments for a particular article ', () => {
+    test('return an object containing all comments for a particular article ', () => {
       return request(app)
       .get("/api/articles/1/comments")
       .expect(200)
