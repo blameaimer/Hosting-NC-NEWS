@@ -28,6 +28,21 @@ WHERE article_id = $1`
       return Promise.reject(err);
     });
 };
+exports.selectArticles = () => {
+  return db
+    .query(
+      `SELECT author,title,article_id,body,topic,created_at,votes 
+FROM articles 
+LEFT JOIN users ON articles.author = users.username
+ORDER BY title DESC
+`)
+    .then(({ rows }) => {
+      return rows;
+    })
+    .catch((err) => {
+      return Promise.reject(err);
+    });
+};
 
 exports.updateArticleById = (id, voteUpdate) => {
   const { vote } = voteUpdate;
@@ -53,3 +68,9 @@ exports.updateArticleById = (id, voteUpdate) => {
       return Promise.reject(err);
     });
 };
+
+exports.selectUsers=()=>{
+  return db.query(`SELECT username FROM users`).then(({ rows }) => {
+    return rows;
+  });
+}
