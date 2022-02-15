@@ -226,7 +226,7 @@ describe('/api/users', () => {
 })
 });
 
-describe('/api/articles/:article_id/comments', () => {
+describe.only('/api/articles/:article_id/comments', () => {
 
   describe('GET', () => {
 
@@ -250,7 +250,26 @@ describe('/api/articles/:article_id/comments', () => {
       });
   })
 })
-    
+test('return an empty array because the second article has no comments ', () => {
+  return request(app)
+  .get("/api/articles/2/comments")
+  .expect(200)
+  .then((response) => {
+      expect(response.body.comments).toHaveLength(0);
+      expect(response.body.comments).toEqual([])
+})
+})
+    test('this test should return an error 404 because the given article id is invalid', () => {
+
+      return request(app)
+      .get("/api/articles/999/comments")
+      .expect(404)
+        .then((response) => {
+            const {msg} = response.body
+           expect(msg).toBe('No article found for id: 999')
+         });
+      
+    });
 });
   
 });

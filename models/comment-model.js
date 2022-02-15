@@ -13,13 +13,7 @@ exports.selectCommentsByArticleId = (id) => {
 
       ,[id])
       .then(({ rows }) => {
-        const comments = rows;
-        if (!comments) {
-          return Promise.reject({
-            status: 404,
-            msg: `No comment found for id: ${id}`,
-          });
-        }
-        return comments;
+          
+          return rows
       })
   };
