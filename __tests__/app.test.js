@@ -94,8 +94,16 @@ describe("/api/topics", () => {
                   votes: expect.any(Number),
                   count: expect.any(String)
                 })
-                expect(response.body.article.count).toBe("11")
+                
           });
+      });
+      test.only('this is a test to see if a specific article has the appropriate comment count length', () => {
+        return request(app)
+        .get("/api/articles/1")
+        .expect(200).then((response)=>{
+          expect(response.body.article.comment_count).toBe("11")
+        })
+        
       });
       test('this is a test which requests an invalid articleId surrounded by quotation marks and expects a 400 response', () => {
           return request(app)
