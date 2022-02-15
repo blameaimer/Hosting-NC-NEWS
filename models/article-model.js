@@ -21,10 +21,6 @@ GROUP BY articles.article_id,articles.author,title`
       }
       return topic;
     })
-    .catch((err) => {
-        console.log(err)
-      return Promise.reject(err);
-    });
 };
 exports.selectArticles = () => {
   return db
@@ -37,9 +33,6 @@ ORDER BY title DESC
     .then(({ rows }) => {
       return rows;
     })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
 };
 
 exports.updateArticleById = (id, voteUpdate) => {
@@ -62,7 +55,5 @@ exports.updateArticleById = (id, voteUpdate) => {
       }
       return topic;
     })
-    .catch((err) => {
-      return Promise.reject(err);
-    });
+
 };

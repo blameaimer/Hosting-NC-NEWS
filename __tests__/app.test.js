@@ -217,3 +217,32 @@ describe('/api/users', () => {
 
 })
 });
+
+describe('/api/articles/:article_id/comments', () => {
+
+  describe('GET', () => {
+
+    test.only('return an object containing all comments for a particular article ', () => {
+      return request(app)
+      .get("/api/articles/1/comments")
+      .expect(200)
+      
+      .then((response) => {
+          expect(response.body.comments).toHaveLength(11);
+          response.body.comments.forEach((comment) => {
+          expect(comment).toEqual(
+            {
+              comment_id: expect.any(Number),
+              votes: expect.any(Number),
+              created_at: expect.any(String),
+              author: expect.any(String), 
+              body: expect.any(String)
+            })
+
+      });
+  })
+})
+    
+});
+  
+});
