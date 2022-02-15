@@ -13,7 +13,17 @@ exports.selectCommentsByArticleId = (id) => {
 
       ,[id])
       .then(({ rows }) => {
-          
+
           return rows
       })
   };
+
+  exports.insertComment =(articleId ,newComment)=>{
+    const {username,body} = newComment;
+    return db
+    .query(
+        `INSERT INTO comments (body,article_id,author) VALUES ($1,$2,$3) RETURNING body,author AS username;`, 
+        [body,articleId,username])
+          .then(({rows}) => {return rows[0]}
+    )
+  }
