@@ -12,7 +12,6 @@ WHERE articles.article_id = $1
 GROUP BY articles.article_id,articles.author,title`
     ,[id])
     .then(({ rows }) => {
-        console.log(rows[0])
       const topic = rows[0];
       if (!topic) {
         return Promise.reject({

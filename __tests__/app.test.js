@@ -78,7 +78,7 @@ describe("/api/topics", () => {
   });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
-    test.only("should return an object containing a particular article ", () => {
+    test("should return an object containing a particular article ", () => {
         return request(app)
           .get("/api/articles/1")
           .expect(200)
