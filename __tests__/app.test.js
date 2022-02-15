@@ -92,12 +92,12 @@ describe("/api/topics", () => {
                   topic: expect.any(String),
                   created_at: expect.any(String),
                   votes: expect.any(Number),
-                  count: expect.any(String)
+                  comment_count: expect.any(String)
                 })
                 
           });
       });
-      test.only('this is a test to see if a specific article has the appropriate comment count length', () => {
+      test('this is a test to see if a specific article has the appropriate comment count length', () => {
         return request(app)
         .get("/api/articles/1")
         .expect(200).then((response)=>{
@@ -123,13 +123,13 @@ describe("/api/topics", () => {
           expect(msg).toBe('Bad Request');
         });
     });
-    test('requests a non existing topic', () => {
+    test('requests a non existing article', () => {
         return request(app)
         .get("/api/articles/69")
         .expect(404)    
         .then((response) => {
            const {msg} = response.body
-          expect(msg).toBe('No topic found for id: 69');
+          expect(msg).toBe('No article found for id: 69');
         });
     });
     });
@@ -185,7 +185,7 @@ describe("/api/topics", () => {
         .expect(404)
         .then((response) => {
             const {msg} = response.body
-           expect(msg).toBe('No topic found for id: 252525')
+           expect(msg).toBe('No article found for id: 252525')
          });
         
     });
