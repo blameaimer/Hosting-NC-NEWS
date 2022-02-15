@@ -4,12 +4,15 @@ const db = require("../db/connection");
 exports.selectArticleById = (id) => {
   return db
     .query(
-      `SELECT author,title,article_id,body,topic,created_at,votes 
+      `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comments.body)
 FROM articles 
 JOIN users ON articles.author = users.username
-WHERE article_id = $1`
+LEFT JOIN comments ON articles.article_id = comments.article_id
+WHERE articles.article_id = $1
+GROUP BY articles.article_id,articles.author,title`
     ,[id])
     .then(({ rows }) => {
+        console.log(rows[0])
       const topic = rows[0];
       if (!topic) {
         return Promise.reject({
@@ -20,6 +23,7 @@ WHERE article_id = $1`
       return topic;
     })
     .catch((err) => {
+        console.log(err)
       return Promise.reject(err);
     });
 };

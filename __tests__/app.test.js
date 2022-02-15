@@ -78,7 +78,7 @@ describe("/api/topics", () => {
   });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
-    test("should return an object containing a particular article ", () => {
+    test.only("should return an object containing a particular article ", () => {
         return request(app)
           .get("/api/articles/1")
           .expect(200)
@@ -91,8 +91,10 @@ describe("/api/topics", () => {
                   body: expect.any(String),
                   topic: expect.any(String),
                   created_at: expect.any(String),
-                  votes: expect.any(Number)
+                  votes: expect.any(Number),
+                  count: expect.any(String)
                 })
+                expect(response.body.article.count).toBe("11")
           });
       });
       test('this is a test which requests an invalid articleId surrounded by quotation marks and expects a 400 response', () => {
