@@ -44,7 +44,7 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
-          test('return an object containing all articles ', () => {
+          test.skip('return an object containing all articles ', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -73,6 +73,28 @@ describe("/api/topics", () => {
             expect(response.body.articles).toBeSorted({key:'title',descending:true})
           });
         })
+        test('return an object containing all articles now with a comment count ', () => {
+          return request(app)
+          .get("/api/articles")
+          .expect(200)
+          
+          .then((response) => {
+            expect(response.body.articles).toHaveLength(12);
+            console.log(response.body.articles)
+              response.body.articles.forEach((article) => {
+              expect(article).toEqual(
+                {
+                  author: expect.any(String),
+                  title: expect.any(String),
+                  article_id: expect.any(Number),
+                  body: expect.any(String),
+                  topic: expect.any(String),
+                  created_at: expect.any(String),
+                  votes: expect.any(Number),
+                  comment_count: expect.any(String)
+                })
+          });
+      })
       });
       
   });
@@ -96,6 +118,7 @@ describe("/api/topics", () => {
                 })
                 
           });
+        })
       });
       test('this is a test to see if a specific article has the appropriate comment count length', () => {
         return request(app)
@@ -271,7 +294,7 @@ test('return an empty array because the second article has no comments ', () => 
       
     });
 });
-  describe.only('POST', () => {
+  describe('POST', () => {
 test('this test should return the newly added comment ', () => {
   
   const newComment = {
