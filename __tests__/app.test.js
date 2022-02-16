@@ -80,7 +80,7 @@ describe("/api/topics", () => {
           
           .then((response) => {
             expect(response.body.articles).toHaveLength(12);
-            console.log(response.body.articles)
+          
               response.body.articles.forEach((article) => {
               expect(article).toEqual(
                 {
@@ -379,5 +379,28 @@ test('this test should return the newly added comment ', () => {
              });
         });
   });
+  
+});
+describe('/api/comments/:comment_id', () => {
+
+    describe("DELETE", () => {});
+    test("should return an empty response body ", () => {
+      return request(app)
+        .delete("/api/comments/2")
+        .expect(204)
+        .then((response)=>{
+          expect(response.body).toEqual({})
+        })
+    });
+
+    test("should return an 404 cuz the comment id is invalid ", () => {
+      return request(app)
+        .delete("/api/comments/595")
+        .expect(404)
+        .then((response)=>{
+
+         expect(response.body.msg).toBe('No comment found for id: 595')
+        })
+    });
   
 });

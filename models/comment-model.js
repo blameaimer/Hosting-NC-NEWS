@@ -27,3 +27,27 @@ exports.selectCommentsByArticleId = (id) => {
           .then(({rows}) => {return rows[0]}
     )
   }
+
+
+  exports.deleteCommentById = (commentId) => {
+    return db
+      .query(`DELETE FROM comments WHERE comment_id = $1;`,[commentId])
+      .then(({rows})=>{
+        return rows;
+      })
+  };
+
+  exports.checkCommentExists = (commentId) =>{
+    return db
+    .query("SELECT * FROM comments WHERE comment_id =$1;",[commentId])
+    .then(({ rows }) => {
+      const article = rows[0];
+      if (!article) {
+        return Promise.reject({
+          status: 404,
+          msg: `No comment found for id: ${commentId}`,
+        });
+      }
+    })
+  
+  }
