@@ -27,9 +27,11 @@ GROUP BY articles.article_id,articles.author,title;`
 exports.selectArticles = () => {
   return db
     .query(
-      `SELECT author,title,article_id,body,topic,created_at,votes 
+      `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comment_id) AS comment_count
 FROM articles 
-LEFT JOIN users ON articles.author = users.username
+JOIN users ON articles.author = users.username
+FULL OUTER JOIN comments ON articles.article_id = comments.article_id
+GROUP BY articles.article_id,articles.author,title
 ORDER BY title DESC;
 `)
     .then(({ rows }) => {
