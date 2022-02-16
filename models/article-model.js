@@ -24,19 +24,40 @@ GROUP BY articles.article_id,articles.author,title;`
 };
 
 
-exports.selectArticles = () => {
-  return db
-    .query(
-      `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comment_id) AS comment_count
+exports.selectArticles = (sort_by='articles.created_at',order='desc',topic) => {
+
+  const validsortby = ["" , "articles.created_at","articles.article_id","title","topic","articles.author","articles.body","articles.votes","asc","desc"]
+  if(!validsortby.includes(sort_by)){
+      return Promise.reject({status: 400, msg: "Bad Request"});
+}
+const validorder=["","desc","asc"]
+if(!validorder.includes(order)){
+  return Promise.reject({status: 400, msg: "Bad Request"});
+}
+const validtopics=["cats","mitch","paper"]
+let strQuery = `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comment_id) AS comment_count
 FROM articles 
 JOIN users ON articles.author = users.username
-FULL OUTER JOIN comments ON articles.article_id = comments.article_id
-GROUP BY articles.article_id,articles.author,title
-ORDER BY title DESC;
-`)
-    .then(({ rows }) => {
-      return rows;
-    })
+FULL OUTER JOIN comments ON articles.article_id = comments.article_id`
+  if(topic){
+    if(!validtopics.includes(topic)){
+      return Promise.reject({status: 400, msg: "Bad Request"});
+}
+else{
+    strQuery+= ` JOIN topics ON topic = topics.slug WHERE topics.slug = '${[topic]}' `
+}
+// topic VARCHAR NOT NULL REFERENCES topics(slug)
+  }
+strQuery += ` GROUP BY articles.article_id,articles.author,title`
+  if(sort_by||order){
+    strQuery+= ` ORDER BY ${[sort_by]} ${[order]};`
+  }
+return db
+  .query(strQuery
+  )
+  .then(({ rows }) => {
+    return rows;
+  });
 };
 
 exports.updateArticleById = (id, voteUpdate) => {
