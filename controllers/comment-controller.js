@@ -33,7 +33,6 @@ insertComment(article_id,req.body)
         res.status(204).send({ comment });
       })
       .catch((err) => {
-        console.log(err);
         next(err)
       });
   };
