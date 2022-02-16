@@ -80,7 +80,6 @@ describe("/api/topics", () => {
           
           .then((response) => {
             expect(response.body.articles).toHaveLength(12);
-            console.log(response.body.articles)
               response.body.articles.forEach((article) => {
               expect(article).toEqual(
                 {
