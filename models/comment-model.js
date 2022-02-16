@@ -22,7 +22,7 @@ exports.selectCommentsByArticleId = (id) => {
     const {username,body} = newComment;
     return db
     .query(
-        `INSERT INTO comments (body,article_id,author) VALUES ($1,$2,$3) RETURNING body,author AS username;`, 
+        `INSERT INTO comments (body,article_id,author) VALUES ($1,$2,$3) RETURNING comment_id,body,author AS username,votes,created_at;`, 
         [body,articleId,username])
           .then(({rows}) => {return rows[0]}
     )

@@ -271,7 +271,7 @@ test('return an empty array because the second article has no comments ', () => 
       
     });
 });
-  describe('POST', () => {
+  describe.only('POST', () => {
 test('this test should return the newly added comment ', () => {
   
   const newComment = {
@@ -284,8 +284,11 @@ test('this test should return the newly added comment ', () => {
     .expect(201)
     .then((response) => {
       expect(response.body.comment).toEqual({
+        comment_id: 19,
         username: 'rogersop',
-        body: 'GOAT never seen a better article'
+        body: 'GOAT never seen a better article',
+        votes: 0,
+        created_at: expect.any(String)
       });
     })
   });
@@ -300,13 +303,13 @@ test('this test should return the newly added comment ', () => {
       return request(app)
       .post('/api/articles/888/comments')
       .send(newComment)
-      .expect(404)
+      .expect(400)
         .then((response) => {
             const {msg} = response.body
-           expect(msg).toBe('Invalid article/username')
+           expect(msg).toBe('Bad Request')
          });
     });
-    test('wrong property name given', () => {
+    test('wrong username property given', () => {
   
       const newComment = {
         fdsfs: "rogersop",
@@ -321,6 +324,21 @@ test('this test should return the newly added comment ', () => {
              expect(msg).toBe('Bad Request')
            });
       });
+      test('wrong property name given for body', () => {
+  
+        const newComment = {
+          username: "rogersop",
+          notbody: "GOAT never seen a better article"
+        }
+          return request(app)
+          .post('/api/articles/1/comments')
+          .send(newComment)
+          .expect(400)
+            .then((response) => {
+                const {msg} = response.body
+               expect(msg).toBe('Bad Request')
+             });
+        });
 
       test('number given instead of string at the username', () => {
   
@@ -331,10 +349,10 @@ test('this test should return the newly added comment ', () => {
           return request(app)
           .post('/api/articles/1/comments')
           .send(newComment)
-          .expect(404)
+          .expect(400)
             .then((response) => {
                 const {msg} = response.body
-               expect(msg).toBe('Invalid article/username')
+               expect(msg).toBe('Bad Request')
              });
         });
   });

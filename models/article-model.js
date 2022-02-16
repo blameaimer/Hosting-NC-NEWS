@@ -71,7 +71,6 @@ exports.checkArticleExists = (articleId) =>{
         msg: `No article found for id: ${articleId}`,
       });
     }
-    return article;
   })
 
 }
