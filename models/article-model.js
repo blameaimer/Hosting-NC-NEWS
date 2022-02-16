@@ -9,7 +9,7 @@ FROM articles
 JOIN users ON articles.author = users.username
 LEFT JOIN comments ON articles.article_id = comments.article_id
 WHERE articles.article_id = $1
-GROUP BY articles.article_id,articles.author,title`
+GROUP BY articles.article_id,articles.author,title;`
     ,[id])
     .then(({ rows }) => {
       const article = rows[0];
@@ -30,7 +30,7 @@ exports.selectArticles = () => {
       `SELECT author,title,article_id,body,topic,created_at,votes 
 FROM articles 
 LEFT JOIN users ON articles.author = users.username
-ORDER BY title DESC
+ORDER BY title DESC;
 `)
     .then(({ rows }) => {
       return rows;
@@ -71,7 +71,6 @@ exports.checkArticleExists = (articleId) =>{
         msg: `No article found for id: ${articleId}`,
       });
     }
-    return article;
   })
 
 }
