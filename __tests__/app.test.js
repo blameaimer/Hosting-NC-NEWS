@@ -137,7 +137,7 @@ test('this test should have a return of the articles about mitchs', () => {
   expect(response.body.articles).toHaveLength(0);
 });
 })
-  test('test for invalid topic input', () => {
+  test.only('test for invalid topic input', () => {
     return request(app)
     .get("/api/articles?topic=waffle")
     .expect(400)
