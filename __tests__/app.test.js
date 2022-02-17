@@ -383,7 +383,7 @@ test('this test should return the newly added comment ', () => {
 describe('/api/comments/:comment_id', () => {
 
     describe("DELETE", () => {});
-    test.only("should return an empty response body ", () => {
+    test("should return an empty response body ", () => {
       return request(app)
         .delete("/api/comments/2")
         .expect(204)
