@@ -29,8 +29,8 @@ insertComment(article_id,req.body)
 
     const { comment_id } = req.params;
     Promise.all([deleteCommentById(comment_id),checkCommentExists(comment_id)])
-      .then(([comment]) => {
-        res.status(204).send({ comment });
+      .then(() => {
+        res.sendStatus(204)
       })
       .catch((err) => {
         next(err)
