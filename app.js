@@ -6,11 +6,12 @@ const {handleInvalidPaths,handlePSQLErrors,handleServerErrors,handleCustomErrors
 const {getArticleById,patchArticleById,getArticles} = require('./controllers/article-controller')
 const {getUsers} = require('./controllers/user-controller')
 const{getCommentsByArticleId,postComment} = require('./controllers/comment-controller')
-
+const{getEndPoints} = require('./controllers/forapi')
 
 app.use(express.json());
 
 //GETS
+app.get("/api",getEndPoints)
 app.get("/api/topics", getTopics)
 app.get("/api/articles",getArticles)
 app.get("/api/articles/:article_id",getArticleById)
