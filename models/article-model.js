@@ -24,7 +24,8 @@ GROUP BY articles.article_id,articles.author,title;`
 };
 
 
-exports.selectArticles = (sort_by='articles.created_at',order='desc',topic) => {
+exports.selectArticles = (sort_by='created_at',order='desc',topic) => {
+
 
   const validsortby = ["created_at","article_id","title","topic","author","body","votes"]
   if(!validsortby.includes(sort_by)){
@@ -34,7 +35,6 @@ const validorder=["desc","asc"]
 if(!validorder.includes(order)){
   return Promise.reject({status: 400, msg: "Bad Request"});
 }
-const validtopics=["cats","mitch","paper"]
 let strQuery = `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comment_id) AS comment_count
 FROM articles 
 JOIN users ON articles.author = users.username
@@ -45,12 +45,20 @@ FULL OUTER JOIN comments ON articles.article_id = comments.article_id`
 
 strQuery += ` GROUP BY articles.article_id,articles.author,title`
   if(sort_by||order){
-    strQuery+= ` ORDER BY ${[sort_by]} ${[order]};`
+    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]};`
   }
+
 return db
   .query(strQuery
   )
   .then(({ rows }) => {
+    const article = rows[0];
+    if (!article) {
+      return Promise.reject({
+        status: 404,
+        msg: `No topic/No article found at ${topic}`,
+      });
+    }
     return rows;
   });
 };

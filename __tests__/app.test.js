@@ -1,13 +1,10 @@
-const { response } = require("express");
 const request = require("supertest");
 const app = require('../app')
 const db = require("../db/connection");
 const testData = require('../db/data/test-data');
 const seed = require('../db/seeds/seed');
- 13-api-endpointjson
 const endpoints = require("../endpoints.json")
 
- main
 //TESTS ------------------------------------------------------
 beforeEach(() => seed(testData)); // seeding test data before each test
 afterAll(() => {
@@ -97,10 +94,6 @@ describe("/api/topics", () => {
           
           .then((response) => {
             expect(response.body.articles).toHaveLength(12);
-11-article-complex-queries
-=======
-          
-main
               response.body.articles.forEach((article) => {
               expect(article).toEqual(
                 {
@@ -153,18 +146,19 @@ main
 test('this test should have a return of the articles about mitchs', () => {
   return request(app)
   .get("/api/articles?topic=paper")
-  .expect(200)
+  .expect(404)
   .then((response) => {
-  expect(response.body.articles).toHaveLength(0);
-});
+    const {msg} = response.body
+    expect(msg).toBe('No topic/No article found at paper');
+  });
 })
-  test.only('test for invalid topic input', () => {
+  test('test for invalid topic input', () => {
     return request(app)
     .get("/api/articles?topic=waffle")
-    .expect(400)
+    .expect(404)
     .then((response) => {
       const {msg} = response.body
-      expect(msg).toBe('Bad Request');
+      expect(msg).toBe('No topic/No article found at waffle');
     });
   });
   test('test for invalid order input', () => {

@@ -5,13 +5,8 @@ const {getTopics} = require('./controllers/topic-controller')
 const {handleInvalidPaths,handlePSQLErrors,handleServerErrors,handleCustomErrors} = require('./errors/index')
 const {getArticleById,patchArticleById,getArticles} = require('./controllers/article-controller')
 const {getUsers} = require('./controllers/user-controller')
- 13-api-endpointjson
-const{getCommentsByArticleId,postComment} = require('./controllers/comment-controller')
 const{getEndPoints} = require('./controllers/forapi')
-=======
 const{getCommentsByArticleId,postComment,removeCommentById} = require('./controllers/comment-controller')
-
- main
 
 app.use(express.json());
 
