@@ -202,7 +202,7 @@ test('this test should have a return of the articles about mitchs', () => {
                 
           });
         })
-      });
+     
       test('this is a test to see if a specific article has the appropriate comment count length', () => {
         return request(app)
         .get("/api/articles/1")
@@ -239,6 +239,7 @@ test('this test should have a return of the articles about mitchs', () => {
         });
     });
     });
+  });
     describe('PATCH', () => {
       test('status:200, responds with the updated article', () => {
       const newVote = {
@@ -464,7 +465,7 @@ test('this test should return the newly added comment ', () => {
   });
   
 });
-describe('/api/comments/:comment_id', () => {
+describe.skip('/api/comments/:comment_id', () => {
 
     describe("DELETE", () => {});
     test("should return an empty response body ", () => {
