@@ -1,4 +1,4 @@
-const {selectCommentsByArticleId,insertComment} = require('../models/comment-model')
+const {selectCommentsByArticleId,insertComment,deleteCommentById} = require('../models/comment-model')
 const {checkArticleExists} = require('../models/article-model')
 
 exports.getCommentsByArticleId = (req, res, next) => {
@@ -13,7 +13,6 @@ exports.getCommentsByArticleId = (req, res, next) => {
       });
   };
 
-
   exports.postComment = (req,res,next) =>{
     const {article_id} = req.params;
 insertComment(article_id,req.body)
@@ -25,3 +24,15 @@ insertComment(article_id,req.body)
         next(err);
     })
    }
+
+  exports.removeCommentById = (req, res,next) => {
+
+    const { comment_id } = req.params;
+    deleteCommentById(comment_id)
+      .then(() => {
+        res.sendStatus(204)
+      })
+      .catch((err) => {
+        next(err)
+      });
+  };

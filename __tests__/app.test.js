@@ -1,9 +1,13 @@
+const { response } = require("express");
 const request = require("supertest");
 const app = require('../app')
 const db = require("../db/connection");
 const testData = require('../db/data/test-data');
 const seed = require('../db/seeds/seed');
+ 13-api-endpointjson
 const endpoints = require("../endpoints.json")
+
+ main
 //TESTS ------------------------------------------------------
 beforeEach(() => seed(testData)); // seeding test data before each test
 afterAll(() => {
@@ -78,7 +82,7 @@ describe("/api/topics", () => {
             });
         })
           });
-          test('test for descending order by title as it was not specified which key should I use in the ticket', () => {
+          test.skip('test for descending order by title as it was not specified which key should I use in the ticket', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -93,7 +97,10 @@ describe("/api/topics", () => {
           
           .then((response) => {
             expect(response.body.articles).toHaveLength(12);
-            console.log(response.body.articles)
+11-article-complex-queries
+=======
+          
+main
               response.body.articles.forEach((article) => {
               expect(article).toEqual(
                 {
@@ -109,6 +116,75 @@ describe("/api/topics", () => {
           });
       })
       });
+      test('test for descending order by title ', () => {
+        return request(app)
+        .get("/api/articles?sort_by=title")
+        .expect(200)
+        .then((response) => {
+        expect(response.body.articles).toBeSorted({key:'title',descending:true})
+      });
+    })
+  
+  test('test for ascending order by date(default)', () => {
+    return request(app)
+    .get("/api/articles?order=asc")
+    .expect(200)
+    .then((response) => {
+    expect(response.body.articles).toBeSorted({key:'created_at',descending:false})
+  });
+  })
+  test('this test should have a return of the articles about cats', () => {
+    return request(app)
+    .get("/api/articles?topic=cats")
+    .expect(200)
+    .then((response) => {
+    expect(response.body.articles).toHaveLength(1);
+  });
+  
+  })
+  test('this test should have a return of the articles about mitchs', () => {
+    return request(app)
+    .get("/api/articles?topic=mitch")
+    .expect(200)
+    .then((response) => {
+    expect(response.body.articles).toHaveLength(11);
+  });
+})
+test('this test should have a return of the articles about mitchs', () => {
+  return request(app)
+  .get("/api/articles?topic=paper")
+  .expect(200)
+  .then((response) => {
+  expect(response.body.articles).toHaveLength(0);
+});
+})
+  test.only('test for invalid topic input', () => {
+    return request(app)
+    .get("/api/articles?topic=waffle")
+    .expect(400)
+    .then((response) => {
+      const {msg} = response.body
+      expect(msg).toBe('Bad Request');
+    });
+  });
+  test('test for invalid order input', () => {
+    return request(app)
+    .get("/api/articles?order=waffle")
+    .expect(400)
+  .then((response) => {
+    const {msg} = response.body
+    expect(msg).toBe('Bad Request');
+  });
+  })
+  test('test for sort by input', () => {
+  return request(app)
+  .get("/api/articles?sort_by=waffle")
+  .expect(400)
+  .then((response) => {
+    const {msg} = response.body
+    expect(msg).toBe('Bad Request');
+  });
+  });
       
   });
   describe("/api/articles/articleid", () => {
@@ -392,5 +468,30 @@ test('this test should return the newly added comment ', () => {
              });
         });
   });
+  
+});
+describe('/api/comments/:comment_id', () => {
+
+    describe("DELETE", () => {});
+    test("should return an empty response body ", () => {
+      return request(app)
+        .delete("/api/comments/2")
+        .expect(204)
+        .then(()=>{
+          return db.query("SELECT comment_id FROM comments WHERE comment_id = 2")
+        })
+        .then(({rows})=>{
+           expect(rows).toEqual([]);
+        })
+    });
+
+    test("should return an 404 because the comment id is not found ", () => {
+      return request(app)
+        .delete("/api/comments/595")
+        .expect(404)
+        .then((response)=>{
+        expect(response.body.msg).toBe('No comment found for id: 595')
+        })
+    });
   
 });
