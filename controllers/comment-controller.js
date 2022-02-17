@@ -1,4 +1,4 @@
-const {selectCommentsByArticleId,insertComment,deleteCommentById,checkCommentExists} = require('../models/comment-model')
+const {selectCommentsByArticleId,insertComment,deleteCommentById} = require('../models/comment-model')
 const {checkArticleExists} = require('../models/article-model')
 
 exports.getCommentsByArticleId = (req, res, next) => {
@@ -28,7 +28,7 @@ insertComment(article_id,req.body)
   exports.removeCommentById = (req, res,next) => {
 
     const { comment_id } = req.params;
-    Promise.all([deleteCommentById(comment_id),checkCommentExists(comment_id)])
+    deleteCommentById(comment_id)
       .then(() => {
         res.sendStatus(204)
       })

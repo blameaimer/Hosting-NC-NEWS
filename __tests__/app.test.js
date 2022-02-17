@@ -1,3 +1,4 @@
+const { response } = require("express");
 const request = require("supertest");
 const app = require('../app')
 const db = require("../db/connection");
@@ -391,7 +392,6 @@ describe('/api/comments/:comment_id', () => {
           return db.query("SELECT comment_id FROM comments WHERE comment_id = 2")
         })
         .then(({rows})=>{
-
            expect(rows).toEqual([]);
         })
     });
@@ -401,8 +401,7 @@ describe('/api/comments/:comment_id', () => {
         .delete("/api/comments/595")
         .expect(404)
         .then((response)=>{
-
-         expect(response.body.msg).toBe('No comment found for id: 595')
+        expect(response.body.msg).toBe('No comment found for id: 595')
         })
     });
   

@@ -31,21 +31,16 @@ exports.selectCommentsByArticleId = (id) => {
 
   exports.deleteCommentById = (commentId) => {
 
-   return db.query(`DELETE FROM comments WHERE comment_id = $1 `,[commentId])
-
+   return db.query(`DELETE FROM comments WHERE comment_id = $1 RETURNING *`,[commentId])
+   .then(({rows})=>{
+    const comment = rows[0];
+    if (!comment) {
+      return Promise.reject({
+        status: 404,
+        msg: `No comment found for id: ${commentId}`,
+      });
+    }
+   })
   };
 
-  exports.checkCommentExists = (commentId) =>{
-    return db
-    .query("SELECT * FROM comments WHERE comment_id =$1;",[commentId])
-    .then(({ rows }) => {
-      const article = rows[0];
-      if (!article) {
-        return Promise.reject({
-          status: 404,
-          msg: `No comment found for id: ${commentId}`,
-        });
-      }
-    })
-  
-  }
+ 
