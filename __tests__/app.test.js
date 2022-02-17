@@ -1,9 +1,9 @@
+const { response } = require("express");
 const request = require("supertest");
 const app = require('../app')
 const db = require("../db/connection");
 const testData = require('../db/data/test-data');
 const seed = require('../db/seeds/seed');
-
 //TESTS ------------------------------------------------------
 beforeEach(() => seed(testData)); // seeding test data before each test
 afterAll(() => {
@@ -80,7 +80,7 @@ describe("/api/topics", () => {
           
           .then((response) => {
             expect(response.body.articles).toHaveLength(12);
-            console.log(response.body.articles)
+          
               response.body.articles.forEach((article) => {
               expect(article).toEqual(
                 {
@@ -379,5 +379,30 @@ test('this test should return the newly added comment ', () => {
              });
         });
   });
+  
+});
+describe('/api/comments/:comment_id', () => {
+
+    describe("DELETE", () => {});
+    test("should return an empty response body ", () => {
+      return request(app)
+        .delete("/api/comments/2")
+        .expect(204)
+        .then(()=>{
+          return db.query("SELECT comment_id FROM comments WHERE comment_id = 2")
+        })
+        .then(({rows})=>{
+           expect(rows).toEqual([]);
+        })
+    });
+
+    test("should return an 404 because the comment id is not found ", () => {
+      return request(app)
+        .delete("/api/comments/595")
+        .expect(404)
+        .then((response)=>{
+        expect(response.body.msg).toBe('No comment found for id: 595')
+        })
+    });
   
 });
