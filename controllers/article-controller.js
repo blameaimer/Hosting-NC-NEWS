@@ -15,7 +15,7 @@ exports.getArticleById = (req, res, next) => {
       selectArticles(sort_by,order,topic,limit,p)
         .then((articles) => res.status(200).send({ articles }))
         .catch((err) => {
-          console.log(err)
+
           next(err);
         });
     };
