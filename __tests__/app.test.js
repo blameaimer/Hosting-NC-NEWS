@@ -54,7 +54,42 @@ describe("/api/topics", () => {
         });
     });
   });
- 
+      describe('POST', () => {
+        test('should return the newly added topic', () => {
+            const newTopic ={
+              slug: 'dogs',
+              description: 'everything about dogs'
+            }
+          return request(app)
+          .post("/api/topics")
+          .send(newTopic)
+          .expect(201)
+          .then((response)=>{
+              expect(response.body.topic).toEqual({
+                 slug: 'dogs', 
+                 description: 'everything about dogs' 
+              }
+              )
+          })
+        });
+
+        test('should return 400', () => {
+          const newTopic ={
+            slugfdgdg: 'dogs',
+            description: 'everything about dogs'
+          }
+        return request(app)
+        .post("/api/topics")
+        .send(newTopic)
+        .expect(400)
+        .then((response) => {
+          const {msg} = response.body
+          expect(msg).toBe('Bad Request');
+        });
+       
+      });
+
+      });
   });
   describe('/api/articles', () => {
       describe('GET', () => {
