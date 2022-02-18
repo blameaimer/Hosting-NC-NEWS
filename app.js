@@ -3,11 +3,12 @@ const app = express();
 
 const {handleInvalidPaths,handlePSQLErrors,handleServerErrors,handleCustomErrors} = require('./errors/index')
 const apiRouter = require('./routes/api-router');
+
+
 app.use(express.json());
 
 //GETS
 app.use("/api",apiRouter)
-
 
 
 

@@ -31,6 +31,7 @@ exports.getArticleById = (req, res, next) => {
   
 insertArticle(req.body)
     .then((article)=>{
+
         res.status(201).send({article})
     })
     .catch((err)=>{
