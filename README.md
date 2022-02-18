@@ -10,7 +10,7 @@ The News app offers a RESTful API which shows titles,topics,authors and many mor
 
 ## Hosted Version
 
-[Hosted version](https://nc-news-blame.herokuapp.com/)
+[Hosted version](https://nc-news-blame.herokuapp.com/api)
 
 
 ## Getting Started
@@ -41,22 +41,10 @@ These Dependencies are only relevant if you want to build the source code:
 
 ### Installing
 
-* Once you have cloned install the dependencies:
 
-        npm i dotenv
-        npm i express
-        npm i pg
-        npm i --save-dev jest
-        npm i husky --save-dev
-        npm i pg-format
-        npm i supertest --save-dev
-        
-* After you have installed them setup your DB connections:
+*Run this code in your terminal:
 
-        In order to access the correct database you will have to setup 2 seperated connections. 
-        Therefore you will have to create .env files where you declare the database name 
-        for the associated environment. 
-        You will find a .env-example file!
+        npm i
 
 * Your package.json should include this:
 
@@ -68,6 +56,8 @@ These Dependencies are only relevant if you want to build the source code:
          "seed:prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL),
          npm run seed" "start": "node listen.js"
          }
+
+
 * Make sure you run these commands before testing:
 
         npm setup-dbs

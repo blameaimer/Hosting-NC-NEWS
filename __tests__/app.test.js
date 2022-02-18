@@ -465,7 +465,7 @@ test('this test should return the newly added comment ', () => {
   });
   
 });
-describe.skip('/api/comments/:comment_id', () => {
+describe('/api/comments/:comment_id', () => {
 
     describe("DELETE", () => {});
     test("should return an empty response body ", () => {
