@@ -180,6 +180,17 @@ test('this test should have a return of the articles about mitchs', () => {
   });
   });
       
+ test.only('should return page 1 with 5 articles', () => {
+  return request(app)
+  .get("/api/articles?limit=5&p=1")
+  .expect(200)
+  .then((response) => {
+    expect(response.body.articles).toHaveLength(5)
+    // const {msg} = response.body
+    // expect(msg).toBe('Bad Request');
+  });
+   
+ }); 
   });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {

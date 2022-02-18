@@ -24,7 +24,7 @@ GROUP BY articles.article_id,articles.author,title;`
 };
 
 
-exports.selectArticles = (sort_by='created_at',order='desc',topic) => {
+exports.selectArticles = (sort_by='created_at',order='desc',topic,limit=10,p) => {
 
 
   const validsortby = ["created_at","article_id","title","topic","author","body","votes"]
@@ -45,13 +45,17 @@ FULL OUTER JOIN comments ON articles.article_id = comments.article_id`
 
 strQuery += ` GROUP BY articles.article_id,articles.author,title`
   if(sort_by||order){
-    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]};`
+    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]}`
   }
-
+if(limit&&p){
+  strQuery+= ` LIMIT ${limit} OFFSET ${limit*p}`
+}
+console.log(strQuery)
 return db
   .query(strQuery
   )
   .then(({ rows }) => {
+    
     const article = rows[0];
     if (!article) {
       return Promise.reject({
