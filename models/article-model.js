@@ -48,9 +48,8 @@ strQuery += ` GROUP BY articles.article_id,articles.author,title`
     strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]}`
   }
 if(limit&&p){
-  strQuery+= ` LIMIT ${limit} OFFSET ${limit*p}`
+  strQuery+= ` LIMIT ${[limit]} OFFSET ${[limit*p]}`
 }
-console.log(strQuery)
 return db
   .query(strQuery
   )

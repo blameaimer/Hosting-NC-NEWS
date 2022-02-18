@@ -2,9 +2,11 @@ const {selectCommentsByArticleId,insertComment,deleteCommentById,updateCommentBy
 const {checkArticleExists} = require('../models/article-model')
 
 exports.getCommentsByArticleId = (req, res, next) => {
-    const { article_id } = req.params;
+    const { article_id, } = req.params;
+    
+    const {limit,p} = req.query;
 
-    Promise.all([selectCommentsByArticleId(article_id),checkArticleExists(article_id)])
+    Promise.all([selectCommentsByArticleId(article_id,limit,p),checkArticleExists(article_id)])
       .then(([comments]) => {
           res.status(200).send({comments})
       })
