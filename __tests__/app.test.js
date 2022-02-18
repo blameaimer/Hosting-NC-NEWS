@@ -58,7 +58,7 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
-          test.skip('return an object containing a article ', () => {
+          test('return an object containing a article ', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -74,17 +74,18 @@ describe("/api/topics", () => {
                     body: expect.any(String),
                     topic: expect.any(String),
                     created_at: expect.any(String),
-                    votes: expect.any(Number)
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
                   })
             });
         })
           });
-          test.skip('test for descending order by title as it was not specified which key should I use in the ticket', () => {
+          test('test for descending order by date', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
             .then((response) => {
-            expect(response.body.articles).toBeSorted({key:'title',descending:true})
+            expect(response.body.articles).toBeSorted({key:'created_at',descending:true})
           });
         })
         test('return an object containing all articles now with a comment count ', () => {
