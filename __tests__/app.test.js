@@ -493,7 +493,7 @@ test('this test should return the newly added comment ', () => {
 });
 describe('/api/comments/:comment_id', () => {
 
-    describe("DELETE", () => {});
+    describe("DELETE", () => {
     test("should return an empty response body ", () => {
       return request(app)
         .delete("/api/comments/2")
@@ -514,5 +514,78 @@ describe('/api/comments/:comment_id', () => {
         expect(response.body.msg).toBe('No comment found for id: 595')
         })
     });
+  });
+  describe('PATCH', () => {
   
+      test('status:200, responds with the updated comment', () => {
+        const newVote = {
+          vote: 19
+        };
+  
+        return request(app)
+          .patch('/api/comments/3')
+          .send(newVote)
+          .expect(200)
+          .then((response) => {
+            expect(response.body.comment.votes).toEqual(119);
+          });
+      });
+      test('same test but with negative integer', () => {
+        const anotherVote = {
+            vote : -200
+        }
+        return request(app)
+        .patch('/api/comments/4')
+        .send(anotherVote)
+        .expect(200)
+        .then((response) => {
+          expect(response.body.comment.votes).toEqual(-300);
+        });
+    });
+   
+    test('this is a test where the given vote is not a number', () => {
+        const anotherVote = {
+            vote : "fds"
+        }
+        return request(app)
+        .patch('/api/comments/4')
+        .send(anotherVote)
+        .expect(400)
+        .then((response) => {
+            const {msg} = response.body
+           expect(msg).toBe('Bad Request');
+         });
+        
+    });
+    test('test for invalid article id handling', () => {
+
+        const newVote = {
+            vote: 19
+          };
+        return request(app)
+        .patch('/api/comments/252525')
+        .send(newVote)
+        .expect(404)
+        .then((response) => {
+            const {msg} = response.body
+           expect(msg).toBe('No comment found for id: 252525')
+         });
+        
+    });
+    test('the patch body has an invalid key', () => {
+        const anotherVote = {
+            votez : "fds"
+        }
+        return request(app)
+        .patch('/api/comments/4')
+        .send(anotherVote)
+        .expect(400)
+        .then((response) => {
+            const {msg} = response.body
+           expect(msg).toBe('Bad Request');
+         });
+        
+    });
+  
+  });
 });

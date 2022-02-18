@@ -11,6 +11,7 @@ app.use("/api",apiRouter)
 
 
 
+
 //ERRORS
 app.use("/api/*",handleInvalidPaths)
 app.use(handleCustomErrors)
