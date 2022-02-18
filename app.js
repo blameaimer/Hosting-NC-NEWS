@@ -19,7 +19,7 @@ app.post("/api/articles/:article_id/comments",apiRouter)
 app.delete("/api/comments/:comment_id", apiRouter);
 //PATCHS
 app.patch("/api/articles/:article_id",apiRouter)
-
+app.patch("/api/comments/:comment_id",apiRouter)
 
 
 
