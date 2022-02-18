@@ -6,20 +6,7 @@ const apiRouter = require('./routes/api-router');
 app.use(express.json());
 
 //GETS
-app.get("/api",apiRouter)
-app.get("/api/topics", apiRouter)
-app.get("/api/articles",apiRouter)
-app.get("/api/articles/:article_id",apiRouter)
-app.get("/api/users",apiRouter)
-app.get("/api/articles/:article_id/comments",apiRouter)
-app.get("/api/users/:username",apiRouter)
-//POSTS
-app.post("/api/articles/:article_id/comments",apiRouter)
-//DELETES
-app.delete("/api/comments/:comment_id", apiRouter);
-//PATCHS
-app.patch("/api/articles/:article_id",apiRouter)
-
+app.use("/api",apiRouter)
 
 
 
