@@ -43,4 +43,26 @@ exports.selectCommentsByArticleId = (id) => {
    })
   };
 
+  exports.updateCommentById = (id, voteUpdate) => {
+    const { vote } = voteUpdate;
+  
+    return db
+      .query(
+        `UPDATE comments 
+        SET votes = votes+$1
+        WHERE comment_id = $2
+        RETURNING *;`,[vote,id]
+      )
+      .then(({ rows }) => {
+        const comment = rows[0];
+        if (!comment) {
+          return Promise.reject({
+            status: 404,
+            msg: `No comment found for id: ${id}`,
+          });
+        }
+        return comment;
+      })
+  
+  };
  
