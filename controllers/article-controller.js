@@ -35,7 +35,7 @@ insertArticle(req.body)
         res.status(201).send({article})
     })
     .catch((err)=>{
-      console.log(err)
+
         next(err);
     })
    }
