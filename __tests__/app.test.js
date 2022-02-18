@@ -181,6 +181,29 @@ test('this test should have a return of the articles about mitchs', () => {
   });
       
   });
+  describe.skip('POST', () => {
+    test('this test should return the newly added comment ', () => {
+  
+      const newArticle = {
+        author: 'rogersop',
+        title: "dogsareamazing",
+        body: "we don't deserve dogs for sure",
+        topic: 'cats'
+      }
+        return request(app)
+        .post('/api/articles')
+        .send(newArticle)
+        .expect(201)
+        .then((response) => {
+          expect(response.body.article).toEqual({
+            article_id: 19,
+            votes: 0,
+            created_at: expect.any(String),
+            //comment_count: 0
+          });
+        })
+      });
+  });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
     test("should return an object containing a particular article ", () => {

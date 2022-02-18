@@ -98,5 +98,17 @@ exports.checkArticleExists = (articleId) =>{
       });
     }
   })
-
+}
+exports.insertArticle =(newArticle)=>{
+  const {author,title,body,topic} = newArticle;
+  return db
+  .query(
+      `INSERT INTO articles (title,topic,author,body) VALUES ($1,$2,$3,$4) FROM topics INNER JOIN 
+      topics.slug = articles.topic RETURNING article_id,votes,created_at;`, 
+      [author,title,body,topic])
+        .then(({rows}) => {
+          console.log(rows)
+          return rows[0]
+        }
+  )
 }
