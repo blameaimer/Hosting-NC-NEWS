@@ -58,7 +58,7 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
-          test.skip('return an object containing all articles ', () => {
+          test.skip('return an object containing a article ', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -180,6 +180,72 @@ test('this test should have a return of the articles about mitchs', () => {
   });
   });
       
+  });
+  describe('POST', () => {
+    test('this test should return the newly added comment ', () => {
+  
+      const newArticle = {
+        author: 'rogersop',
+        title: "dogsareamazing",
+        body: "we don't deserve dogs for sure",
+        topic: 'cats'
+      }
+        return request(app)
+        .post('/api/articles')
+        .send(newArticle)
+        .expect(201)
+        .then((response) => {
+
+          expect(response.body.article).toEqual({
+            article_id: 13,
+            votes: 0,
+            created_at: expect.any(String),
+            comment_count: "0"
+          });
+        })
+      });
+      test('should respond with an error the author does not exist ', () => {
+  
+        const newArticle = {
+          author: 'fdsdsf',
+          title: "dogsareamazing",
+          body: "we don't deserve dogs for sure",
+          topic: 'cats'
+        }
+          return request(app)
+          .post('/api/articles')
+          .send(newArticle)
+          .expect(400)
+         
+        });
+        test('should respond with an error invalid property ', () => {
+  
+          const newArticle = {
+            fdsfds: 'rogersop',
+            title: "dogsareamazing",
+            body: "we don't deserve dogs for sure",
+            topic: 'cats'
+          }
+            return request(app)
+            .post('/api/articles')
+            .send(newArticle)
+            .expect(400)
+           
+          });
+          test('should respond with an error the author does not exist ', () => {
+  
+            const newArticle = {
+              author: 'fdsdsf',
+              title: "dogsareamazing",
+              fds: "we don't deserve dogs for sure",
+              gfdgfd: 'cats'
+            }
+              return request(app)
+              .post('/api/articles')
+              .send(newArticle)
+              .expect(400)
+             
+            });
   });
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
