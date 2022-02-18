@@ -332,6 +332,32 @@ describe('/api/users', () => {
 
 })
 });
+describe('/api/users/:username', () => {
+  describe('GET', () => {
+    test('should return a specific user by the username passed to the endpoint', () => {
+      return request(app)
+      .get("/api/users/rogersop")
+      .expect(200)
+      .then((response) => {
+            expect(response.body.user).toEqual({
+              username: 'rogersop',
+              name: 'paul',
+              avatar_url: 'https://avatars2.githubusercontent.com/u/24394918?s=400&v=4'
+            })
+  });
+    });
+    test('this should return a 404 and a msg user not found', () => {
+      return request(app)
+      .get("/api/users/erwrewrew")
+      .expect(404)
+      .then((response) => {
+        const {msg} = response.body
+       expect(msg).toBe('erwrewrew Not found!')
+     });
+    });
+  });
+  
+});
 
 describe('/api/articles/:article_id/comments', () => {
 
