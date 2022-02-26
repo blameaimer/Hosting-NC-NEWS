@@ -49,6 +49,10 @@ strQuery += ` GROUP BY articles.article_id`
     strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]}`
   }
 if(limit&&p){
+
+  strQuery+= ` LIMIT ${[limit]} OFFSET ${[limit*p]}`
+}
+
   if(!Number(limit) || !Number(p)){
  
     return Promise.reject({status: 400, msg: "Bad Request"});
@@ -56,6 +60,7 @@ if(limit&&p){
   strQuery+= ` LIMIT ${limit} OFFSET ${limit*(p-1)}`
 }
 strQuery+=';'
+
 return db
   .query(strQuery,arr
   )

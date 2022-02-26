@@ -182,6 +182,7 @@ test('this test should have a return of the articles about mitchs', () => {
   });
   });
       
+
  
           test('should return page 1 with 10 articles', () => {
             return request(app)
@@ -246,6 +247,7 @@ test('this test should have a return of the articles about mitchs', () => {
             
           })
         
+
   });
 
   describe("/api/articles/articleid", () => {
@@ -470,6 +472,53 @@ test('return an empty array because the second article has no comments ', () => 
          });
       
     });
+
+    test('should return page 1 with 5 comments', () => {
+      return request(app)
+      .get("/api/articles/1/comments?limit=5&p=1")
+      .expect(200)
+      .then((response) => {
+        expect(response.body.comments).toHaveLength(5)
+        response.body.comments.forEach((comment) =>{
+        expect(comment).toEqual(expect.objectContaining({
+          comment_id: expect.any(Number),
+          votes: expect.any(Number),
+          created_at: expect.any(String),
+          author: expect.any(String),
+          body: expect.any(String)
+        }))});
+      });
+      
+      });
+      test('should return page 1 with 10 comments(by default)', () => {
+        return request(app)
+        .get("/api/articles/1/comments?p=1")
+        .expect(200)
+        .then((response) => {
+          expect(response.body.comments).toHaveLength(10)
+          response.body.comments.forEach((comment) =>{
+          expect(comment).toEqual(expect.objectContaining({
+            comment_id: expect.any(Number),
+            votes: expect.any(Number),
+            created_at: expect.any(String),
+            author: expect.any(String),
+            body: expect.any(String)
+          }))});
+        });
+        
+        });
+      test('should return 400', () => {
+        return request(app)
+        .get("/api/articles/1/comments?limit=waffle&p=1")
+        .expect(400)
+      })
+
+
+      test('should return 400', () => {
+        return request(app)
+        .get("/api/articles/1/comments?limit=waffle&p=lolo")
+        .expect(400)
+      })
 });
   describe('POST', () => {
 test('this test should return the newly added comment ', () => {
@@ -556,8 +605,8 @@ test('this test should return the newly added comment ', () => {
              });
         });
   });
-  
 });
+
 describe('/api/comments/:comment_id', () => {
 
     describe("DELETE", () => {
@@ -653,6 +702,5 @@ describe('/api/comments/:comment_id', () => {
          });
         
     });
-  
+  })
   });
-});
