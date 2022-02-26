@@ -9,9 +9,18 @@
       "topics": [{ "slug": "football", "description": "Footie!" }]
     }
   },
+  "POST /api/topics": {
+    "description": "post a topic",
+    "queries": [],
+    "exampleComment":{
+      
+        "slug": "dogs",
+        "description": "everything about dogs"
+      
+    }},
   "GET /api/articles": {
-    "description": "serves an array of all topics",
-    "queries": ["topic", "sort_by", "order"],
+    "description": "serves an array of all articles",
+    "queries": ["topic", "sort_by", "order","limit(default is 10)","p(page)"],
     "exampleResponse": {
       "articles": [
         {
@@ -39,9 +48,19 @@
       ]
     }
   },
-  "GET /api/articles/:article_id": {
-    "description": "serves an array of a specific article",
+  "POST /api/articles": {
+    "description": "add an article to the database",
     "queries": [],
+    "exampleComment":{
+      "author": "rogersop",
+      "title": "dogsareamazing",
+      "body": "we don't deserve dogs for sure",
+      "topic": "cats"
+      
+    }},
+  "GET /api/articles/:article_id": {
+    "description": "serves an array with an object of a specific article",
+    "queries": ["limit(default is 10)","p(page)"],
     "exampleResponse": {
       "article": [
         {
@@ -58,6 +77,29 @@
       ]
     }
   },
+  "PATCH /api/articles/:article_id": {
+    "description": "update votes for an article",
+    "queries": [],
+    "exampleVote":{
+      "vote": 100
+    },
+    "exampleResponse": {
+      "article": [
+        {
+          "votes": 102
+        }
+      ]
+    }
+  },
+  "DELETE /api/articles/:article_id": {
+    "description": "delete an article by id",
+    "queries": [],
+    "exampleResponse":{
+     "response": []
+    }
+   
+  },
+  
   "GET /api/users": {
     "description": "serves an array of a usernames",
     "queries": [],
@@ -75,6 +117,17 @@
       ]
     }
   },
+  "GET /api/users/:username": {
+    "description": "responds with a specific user",
+    "queries": [],
+    "exampleResponse": {
+     "user":[ {
+        "username": "blameaimer",
+        "name": "Raymund",
+        "avatar_url": "https://avatars2.githubusercontent.com/u/24394918?s=400&v=4"
+      }]
+  }
+},
   "GET /api/articles/:article_id/comments": {
     "description": "serves an array of comments about a specific article",
     "queries": [],
@@ -133,14 +186,22 @@
       ]
     }
   },
-  "PATCH /api/articles/:article_id": {
-    "description": "update votes for an article",
+  "DELETE /api/comments/:comment_id": {
+    "description": "delete a comment by id",
+    "queries": [],
+    "exampleResponse":{
+     "response": []
+    }
+   
+  },
+  "PATCH /api/comments/:comment_id": {
+    "description": "update votes for a comment",
     "queries": [],
     "exampleVote":{
       "vote": 100
     },
     "exampleResponse": {
-      "article": [
+      "comment": [
         {
           "votes": 102
         }
