@@ -58,7 +58,11 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
-          test('return an object containing a article ', () => {
+
+
+
+          test('return an object containing all article ', () => {
+
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -182,6 +186,7 @@ test('this test should have a return of the articles about mitchs', () => {
   });
       
   });
+
   describe('POST', () => {
     test('this test should return the newly added comment ', () => {
   
@@ -248,6 +253,7 @@ test('this test should have a return of the articles about mitchs', () => {
              
             });
   });
+
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
     test("should return an object containing a particular article ", () => {

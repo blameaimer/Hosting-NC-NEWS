@@ -5,6 +5,7 @@ articleRouter.route('/', getArticles)
 .get(getArticles)
 .post(postArticle)
 
+
 articleRouter.route('/:article_id')
 .get(getArticleById)
 .patch(patchArticleById)

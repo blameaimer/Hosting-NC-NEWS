@@ -6,7 +6,6 @@ exports.selectArticleById = (id) => {
     .query(
       `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comments.body) AS comment_count
 FROM articles 
-JOIN users ON articles.author = users.username
 LEFT JOIN comments ON articles.article_id = comments.article_id
 WHERE articles.article_id = $1
 GROUP BY articles.article_id,articles.author,title;`
@@ -24,7 +23,7 @@ GROUP BY articles.article_id,articles.author,title;`
 };
 
 
-exports.selectArticles = (sort_by='created_at',order='desc',topic) => {
+exports.selectArticles = (sort_by='created_at',order='desc',topic=null,limit=10,p) => {
 
 
   const validsortby = ["created_at","article_id","title","topic","author","body","votes"]
@@ -37,21 +36,31 @@ if(!validorder.includes(order)){
 }
 let strQuery = `SELECT articles.author,title,articles.article_id,articles.body,topic,articles.created_at,articles.votes,COUNT(comment_id) AS comment_count
 FROM articles 
-JOIN users ON articles.author = users.username
-FULL OUTER JOIN comments ON articles.article_id = comments.article_id`
+LEFT JOIN comments ON articles.article_id = comments.article_id`
+
+let arr = [];
   if(topic){
-    strQuery+= ` JOIN topics ON topic = topics.slug WHERE topics.slug = '${[topic]}' `
+    strQuery+= ` WHERE topic = $1 `  
+    arr.push(topic)
 }
 
-strQuery += ` GROUP BY articles.article_id,articles.author,title`
+strQuery += ` GROUP BY articles.article_id`
   if(sort_by||order){
-    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]};`
+    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]}`
   }
-
+if(limit&&p){
+  if(!Number(limit) || !Number(p)){
+ 
+    return Promise.reject({status: 400, msg: "Bad Request"});
+  }
+  strQuery+= ` LIMIT ${limit} OFFSET ${limit*(p-1)}`
+}
+strQuery+=';'
 return db
-  .query(strQuery
+  .query(strQuery,arr
   )
   .then(({ rows }) => {
+   
     const article = rows[0];
     if (!article) {
       return Promise.reject({
@@ -60,7 +69,23 @@ return db
       });
     }
     return rows;
-  });
+  }).then((rows)=>{
+    let newarr =[]
+   let strQuery=`SELECT * FROM articles `
+    if(topic){
+      strQuery+= `WHERE topic = $1`  
+      newarr.push(topic)
+  }
+    const totalcount =db.query(
+      strQuery,newarr
+    )
+   
+    return Promise.all([rows,totalcount])
+  }).then(([rows,totalcount])=>{
+    
+    const data = {articles: rows,total_count: totalcount.rows.length}
+    return data
+  })
 };
 
 exports.updateArticleById = (id, voteUpdate) => {
@@ -121,3 +146,4 @@ GROUP BY articles.article_id,articles.author,title;`,[rows[0].article_id]
     return rows[0]
   })
 }
+
