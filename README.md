@@ -19,8 +19,8 @@ The News app offers a RESTful API which shows titles,topics,authors and many mor
 
 * In your terminal go into a directory and then run the following command:
 
-        git clone https://github.com/blameaimer/NC-backend
-        cd NC-backend
+        git clone https://github.com/blameaimer/Hosting-NC-backend
+        cd Hosting-NC-backend
 
 
 ## Dependencies

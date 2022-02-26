@@ -123,6 +123,27 @@ exports.checkArticleExists = (articleId) =>{
       });
     }
   })
-
+}
+exports.insertArticle =(newArticle)=>{
+  const {author,title,body,topic} = newArticle;
+  return db
+  .query(
+      `INSERT INTO articles (title,topic,author,body) VALUES ($1,$2,$3,$4) 
+       RETURNING article_id,votes,created_at;`, 
+      [title,topic,author,body])
+        .then(({rows}) => {
+         return db
+         .query(
+           `SELECT articles.article_id,articles.votes,articles.created_at,COUNT(comment_id) AS comment_count
+           FROM articles 
+JOIN users ON articles.author = users.username
+FULL OUTER JOIN comments ON articles.article_id = comments.article_id
+WHERE articles.article_id = $1
+GROUP BY articles.article_id,articles.author,title;`,[rows[0].article_id]
+         )
+        }
+  ).then(({rows})=>{
+    return rows[0]
+  })
 }
 
