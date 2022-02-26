@@ -52,7 +52,6 @@ insertArticle(req.body)
         res.sendStatus(204)
       })
       .catch((err) => {
-        console.log(err)
         next(err)
       });
   };
