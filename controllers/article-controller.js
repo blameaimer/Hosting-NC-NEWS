@@ -1,5 +1,5 @@
-const {  selectArticleById,
-    updateArticleById,selectArticles,} = require('../models/article-model')
+const { selectArticleById,updateArticleById,selectArticles,insertArticle} = require('../models/article-model')
+
 
 
 exports.getArticleById = (req, res, next) => {
@@ -13,7 +13,7 @@ exports.getArticleById = (req, res, next) => {
   exports.getArticles = (req, res, next) => {
     const {sort_by,order,topic,limit,p} =req.query;
       selectArticles(sort_by,order,topic,limit,p)
-        .then((articles) => res.status(200).send({ articles }))
+        .then((data) => res.status(200).send(data))
         .catch((err) => {
 
           next(err);
@@ -28,3 +28,18 @@ exports.getArticleById = (req, res, next) => {
         next(err);
       });
   };
+
+
+  exports.postArticle = (req,res,next) =>{
+  
+insertArticle(req.body)
+    .then((article)=>{
+
+        res.status(201).send({article})
+    })
+    .catch((err)=>{
+
+        next(err);
+    })
+   }
+

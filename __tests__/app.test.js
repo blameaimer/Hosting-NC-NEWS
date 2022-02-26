@@ -58,7 +58,8 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
-          test.skip('return an object containing all articles ', () => {
+
+       test('return an object containing all articles ', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -74,17 +75,18 @@ describe("/api/topics", () => {
                     body: expect.any(String),
                     topic: expect.any(String),
                     created_at: expect.any(String),
-                    votes: expect.any(Number)
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
                   })
             });
         })
           });
-          test.skip('test for descending order by title as it was not specified which key should I use in the ticket', () => {
+          test('test for descending order by date', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
             .then((response) => {
-            expect(response.body.articles).toBeSorted({key:'title',descending:true})
+            expect(response.body.articles).toBeSorted({key:'created_at',descending:true})
           });
         })
         test('return an object containing all articles now with a comment count ', () => {
@@ -180,29 +182,74 @@ test('this test should have a return of the articles about mitchs', () => {
   });
   });
       
- test('should return page 1 with 5 articles', () => {
-  return request(app)
-  .get("/api/articles?limit=5&p=1")
-  .expect(200)
-  .then((response) => {
-    expect(response.body.articles).toHaveLength(5)
-    response.body.articles.forEach((article) =>{
-      expect(article).toEqual(expect.objectContaining({
-        author: expect.any(String),
-        title: expect.any(String),
-        article_id: expect.any(Number),
-        body: expect.any(String),
-        topic: expect.any(String),
-        created_at: expect.any(String),
-        votes: expect.any(Number),
-        comment_count: expect.any(String)
-      }))});
-    // const {msg} = response.body
-    // expect(msg).toBe('Bad Request');
+
+ 
+          test('should return page 1 with 10 articles', () => {
+            return request(app)
+            .get("/api/articles?p=1")
+            .expect(200)
+            .then((response) => {
+              expect(response.body.articles).toHaveLength(10)
+              expect(response.body.total_count).toBe(12)
+              response.body.articles.forEach((article) => {
+                expect(article).toEqual(
+                  {
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    body: expect.any(String),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
+          
+                  })
+            });
+          })})
+          test('should return page 1 with 5 articles', () => {
+            return request(app)
+            .get("/api/articles?limit=5&&p=1")
+            .expect(200)
+            .then((response) => {
+              expect(response.body.articles).toHaveLength(5)
+               expect(response.body.total_count).toBe(12)
+              response.body.articles.forEach((article) => {
+                expect(article).toEqual(
+                  {
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    body: expect.any(String),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
+          
+                  })
+            });
+          })})
+          test('400 for invalid limit input', () => {
+            return request(app)
+            .get("/api/articles?limit=waffle&&p=1")
+            .expect(400)
+            
+          })
+          test('400 for invalid page input', () => {
+            return request(app)
+            .get("/api/articles?limit=waffle&&p=rewrew")
+            .expect(400)
+            
+          })
+          test('404 for invalid page', () => {
+            return request(app)
+            .get("/api/articles?limit=1&&p=432432")
+            .expect(404)
+            
+          })
+        
+
   });
-   
- }); 
-  });
+
   describe("/api/articles/articleid", () => {
     describe("GET", () => {
     test("should return an object containing a particular article ", () => {
