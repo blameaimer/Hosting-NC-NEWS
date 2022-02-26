@@ -147,3 +147,17 @@ GROUP BY articles.article_id,articles.author,title;`,[rows[0].article_id]
     return rows[0]
   })
 }
+
+exports.deleteArticleById = (articleID) => {
+
+  return db.query(`DELETE FROM articles WHERE article_id = $1 RETURNING *`,[articleID])
+  .then(({rows})=>{
+   const article = rows[0];
+   if (!article) {
+     return Promise.reject({
+       status: 404,
+       msg: `No article found for id: ${articleID}`,
+     });
+   }
+  })
+ };

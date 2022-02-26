@@ -361,7 +361,7 @@ test('this test should have a return of the articles about mitchs', () => {
         });
     });
     });
-  });
+
     describe('PATCH', () => {
       test('status:200, responds with the updated article', () => {
       const newVote = {
@@ -433,7 +433,29 @@ test('this test should have a return of the articles about mitchs', () => {
         
     });
   });
- 
+  describe("DELETE", () => {
+    test("should return an empty response body ", () => {
+      return request(app)
+        .delete("/api/articles/2")
+        .expect(204)
+        .then(()=>{
+          return db.query("SELECT article_id FROM comments WHERE article_id = 2")
+        })
+        .then(({rows})=>{
+           expect(rows).toEqual([]);
+        })
+    });
+
+    test("should return an 404 because the comment id is not found ", () => {
+      return request(app)
+        .delete("/api/articles/595")
+        .expect(404)
+        .then((response)=>{
+        expect(response.body.msg).toBe('No article found for id: 595')
+        })
+    });
+  });
+ })
 })
 describe('/api/users', () => {
 
