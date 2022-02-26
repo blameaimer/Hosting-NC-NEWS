@@ -1,7 +1,4 @@
-const {  selectArticleById,
-
-    updateArticleById,selectArticles} = require('../models/article-model')
-    updateArticleById,selectArticles,insertArticle} = require('../models/article-model')
+const { selectArticleById,updateArticleById,selectArticles,insertArticle} = require('../models/article-model')
 
 
 
