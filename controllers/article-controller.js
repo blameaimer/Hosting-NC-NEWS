@@ -1,5 +1,5 @@
 const {  selectArticleById,
-    updateArticleById,selectArticles,insertArticle} = require('../models/article-model')
+    updateArticleById,selectArticles} = require('../models/article-model')
 
 
 exports.getArticleById = (req, res, next) => {
@@ -30,16 +30,4 @@ exports.getArticleById = (req, res, next) => {
   };
 
 
-  
-  exports.postArticle = (req,res,next) =>{
-  
-    insertArticle(req.body)
-        .then((article)=>{
-    
-            res.status(201).send({article})
-        })
-        .catch((err)=>{
-    
-            next(err);
-        })
-       }
+
