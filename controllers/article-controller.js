@@ -1,4 +1,4 @@
-const { selectArticleById,updateArticleById,selectArticles,insertArticle} = require('../models/article-model')
+const { selectArticleById,updateArticleById,selectArticles,insertArticle,deleteArticleById} = require('../models/article-model')
 
 
 
@@ -42,4 +42,19 @@ insertArticle(req.body)
         next(err);
     })
    }
+
+
+   exports.removeArticleById = (req, res,next) => {
+
+    const { article_id } = req.params;
+    deleteArticleById(article_id)
+      .then(() => {
+        res.sendStatus(204)
+      })
+      .catch((err) => {
+        console.log(err)
+        next(err)
+      });
+  };
+   
 
