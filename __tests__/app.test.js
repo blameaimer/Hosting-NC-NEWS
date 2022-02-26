@@ -59,10 +59,7 @@ describe("/api/topics", () => {
   describe('/api/articles', () => {
       describe('GET', () => {
 
-
-
-          test('return an object containing all article ', () => {
-
+       test('return an object containing all articles ', () => {
             return request(app)
             .get("/api/articles")
             .expect(200)
@@ -185,73 +182,70 @@ test('this test should have a return of the articles about mitchs', () => {
   });
   });
       
-  });
-
-  describe('POST', () => {
-    test('this test should return the newly added comment ', () => {
-  
-      const newArticle = {
-        author: 'rogersop',
-        title: "dogsareamazing",
-        body: "we don't deserve dogs for sure",
-        topic: 'cats'
-      }
-        return request(app)
-        .post('/api/articles')
-        .send(newArticle)
-        .expect(201)
-        .then((response) => {
-
-          expect(response.body.article).toEqual({
-            article_id: 13,
-            votes: 0,
-            created_at: expect.any(String),
-            comment_count: "0"
-          });
-        })
-      });
-      test('should respond with an error the author does not exist ', () => {
-  
-        const newArticle = {
-          author: 'fdsdsf',
-          title: "dogsareamazing",
-          body: "we don't deserve dogs for sure",
-          topic: 'cats'
-        }
-          return request(app)
-          .post('/api/articles')
-          .send(newArticle)
-          .expect(400)
-         
-        });
-        test('should respond with an error invalid property ', () => {
-  
-          const newArticle = {
-            fdsfds: 'rogersop',
-            title: "dogsareamazing",
-            body: "we don't deserve dogs for sure",
-            topic: 'cats'
-          }
+ 
+          test('should return page 1 with 10 articles', () => {
             return request(app)
-            .post('/api/articles')
-            .send(newArticle)
-            .expect(400)
-           
-          });
-          test('should respond with an error the author does not exist ', () => {
-  
-            const newArticle = {
-              author: 'fdsdsf',
-              title: "dogsareamazing",
-              fds: "we don't deserve dogs for sure",
-              gfdgfd: 'cats'
-            }
-              return request(app)
-              .post('/api/articles')
-              .send(newArticle)
-              .expect(400)
-             
+            .get("/api/articles?p=1")
+            .expect(200)
+            .then((response) => {
+              expect(response.body.articles).toHaveLength(10)
+              expect(response.body.total_count).toBe(12)
+              response.body.articles.forEach((article) => {
+                expect(article).toEqual(
+                  {
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    body: expect.any(String),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
+          
+                  })
             });
+          })})
+          test('should return page 1 with 5 articles', () => {
+            return request(app)
+            .get("/api/articles?limit=5&&p=1")
+            .expect(200)
+            .then((response) => {
+              expect(response.body.articles).toHaveLength(5)
+               expect(response.body.total_count).toBe(12)
+              response.body.articles.forEach((article) => {
+                expect(article).toEqual(
+                  {
+                    author: expect.any(String),
+                    title: expect.any(String),
+                    article_id: expect.any(Number),
+                    body: expect.any(String),
+                    topic: expect.any(String),
+                    created_at: expect.any(String),
+                    votes: expect.any(Number),
+                    comment_count: expect.any(String)
+          
+                  })
+            });
+          })})
+          test('400 for invalid limit input', () => {
+            return request(app)
+            .get("/api/articles?limit=waffle&&p=1")
+            .expect(400)
+            
+          })
+          test('400 for invalid page input', () => {
+            return request(app)
+            .get("/api/articles?limit=waffle&&p=rewrew")
+            .expect(400)
+            
+          })
+          test('404 for invalid page', () => {
+            return request(app)
+            .get("/api/articles?limit=1&&p=432432")
+            .expect(404)
+            
+          })
+        
   });
 
   describe("/api/articles/articleid", () => {
