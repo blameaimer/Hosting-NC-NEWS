@@ -1,6 +1,6 @@
 const {
   selectTopics,
-  selectUsers
+  insertTopic
 } = require("../models/topic-model");
 
 exports.getTopics = (req, res, next) => {
@@ -12,4 +12,16 @@ exports.getTopics = (req, res, next) => {
       next(err);
     });
 };
+
+exports.postTopic = (req,res,next) =>{
+
+insertTopic(req.body)
+
+  .then((topic)=>{
+      res.status(201).send({topic})
+  })
+  .catch((err)=>{
+      next(err);
+  })
+ }
 
