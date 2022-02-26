@@ -28,6 +28,9 @@ exports.getArticleById = (req, res, next) => {
         next(err);
       });
   };
+
+
+  
   exports.postArticle = (req,res,next) =>{
   
     insertArticle(req.body)

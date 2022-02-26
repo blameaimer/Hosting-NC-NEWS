@@ -58,6 +58,15 @@ describe("/api/topics", () => {
   });
   describe('/api/articles', () => {
       describe('GET', () => {
+
+
+
+
+
+
+
+
+        
        test('return an object containing all articles ', () => {
             return request(app)
             .get("/api/articles")
