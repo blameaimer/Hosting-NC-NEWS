@@ -443,7 +443,7 @@ test('return an empty array because the second article has no comments ', () => 
       });
       
       });
-      test.skip('should return page 1 with 10 comments', () => {
+      test('should return page 1 with 10 comments(by default)', () => {
         return request(app)
         .get("/api/articles/1/comments?p=1")
         .expect(200)

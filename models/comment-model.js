@@ -10,7 +10,11 @@ exports.selectCommentsByArticleId = (id,limit=10,p) => {
   WHERE articles.article_id = ${[id]}`
 
   if(limit&&p){
-    strQuery+= ` LIMIT ${[limit]} OFFSET ${[limit*p]}`
+    if(!Number(limit) || !Number(p)){
+   
+      return Promise.reject({status: 400, msg: "Bad Request"});
+    }
+    strQuery+= ` LIMIT ${limit} OFFSET ${limit*(p-1)}`
   }
     return db
       .query(
