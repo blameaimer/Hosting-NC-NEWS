@@ -55,7 +55,7 @@ describe("/api/topics", () => {
         });
     });
   });
-      describe.only('POST', () => {
+      describe('POST', () => {
         test('should return the newly added topic', () => {
             const newTopic ={
               slug: 'dogs',
