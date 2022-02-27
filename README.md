@@ -1,9 +1,25 @@
-
-# NC-News
-
-
-
-
+<div align="center">
+  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Fnorthcoders&psig=AOvVaw33nDAOqXvDcOh4boNJEH0x&ust=1646016994782000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKia8abxnvYCFQAAAAAdAAAAABAD" alt="NC LOGO" width="400" />
+  <p></p>
+  <h1>NC News</h1>
+  <p></p>
+  <sup>
+    <a href="https://github.com/blameaimer/Hosting-NC-NEWS/actions">
+      <img src="https://github.com/blameaimer/Hosting-NC-NEWS/actions/workflows/actions.yml/badge.svg" />
+    </a>
+  </sup>
+  <br />
+  <p align="center">
+    <a href="#-intro"><b>What is this?</b></a>
+    &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+    <a href="#-getting-started"><b>Usage</b></a>
+    &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+    <a href="#-docs"><b>Docs</b></a>
+    &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
+    <a href="#-further-help"><b>Need help?</b></a>
+  </p>
+  <br />
+</div>
 ## Description
 
 The News app offers a RESTful API which shows titles,topics,authors and many more for news. To achieve this I have used all of my knowledge I've been taught at Northcoders in the past 1 and a half month.
