@@ -83,7 +83,7 @@ The News app offers a RESTful API which was built in NodeJS using [express](http
 ---
 
 ## 👊 Further Help?
-This is my first public back-end project feel free to email/tweet me any questions , advices regarding this project <br /
+This is my first public back-end project feel free to email/tweet me any questions , advices regarding this project <br />
 Created by Rajmund Noel Gyuris <br />
 [twitter](https://twitter.com/blamexcode) <br />
 email:blameaimer@gmail.com 
