@@ -86,8 +86,8 @@ The News app offers a RESTful API which was built in NodeJS using [express](http
 This is my first public back-end project feel free to email/tweet me any questions , advices regarding this project <br />
 Created by Rajmund Noel Gyuris <br />
  <a href="https://twitter.com/blamexcode">
-      You can find me at twitter(click on the logo)
-      <img src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png" alt="Twitter Logo" width="100" />
+      <img src="https://help.twitter.com/content/dam/help-twitter/brand/logo.png" alt="Twitter Logo" width="100" /> <br/>
+    Twitter
     </a> <br />
 Or contact me via e-mail blameaimer@gmail.com 
 <br />
