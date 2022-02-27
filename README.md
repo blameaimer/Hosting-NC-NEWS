@@ -26,7 +26,10 @@
 
 ## 👋 Intro
 
-The News app offers a RESTful API which was built in NodeJS using [express](https://expressjs.com/),[postgresql](https://www.postgresql.org/),[jest](https://jestjs.io/)
+The News app offers a RESTful API which was built in NodeJS using <br />
+[express](https://expressjs.com/)<br />
+[postgresql](https://www.postgresql.org/)<br />
+[jest](https://jestjs.io/)
 
 ---
 
