@@ -3,7 +3,7 @@ name: Test and Deploy
 on:
   push:
     branches:
-      - 11-github-workflow
+      - main
 
 jobs:
   test:
@@ -15,3 +15,14 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
+      - name: Setup PSQL
+        uses: harmon758/postgresql-action@v1
+        with: 
+          postgresql db: db_test
+          postgresql user: tester
+          postgresql password: S3cUre2@
+
+
+      - name: Test Utils and App
+        run: PGDATABASE=db_test PGUSER=tester PGPASSWORD=S3cUre2@ npm test
