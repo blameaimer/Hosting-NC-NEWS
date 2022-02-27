@@ -12,26 +12,25 @@
   <p align="center">
     <a href="#-intro"><b>What is this?</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="#-getting-started"><b>Usage</b></a>
+    <a href="https://nc-news-blame.herokuapp.com/api"><b>Hosted Version</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="#-docs"><b>Docs</b></a>
+    <a href="#-getting-started"><b>Usage</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="#-further-help"><b>Need help?</b></a>
   </p>
   <br />
 </div>
-## Description
 
-The News app offers a RESTful API which shows titles,topics,authors and many more for news. To achieve this I have used all of my knowledge I've been taught at Northcoders in the past 1 and a half month.
-
-## Hosted Version
-
-[Hosted version](https://nc-news-blame.herokuapp.com/api)
+---
 
 
-## Getting Started
+## 👋 Intro
 
-## Installing from Git 
+The News app offers a RESTful API which was built in NodeJS using [express](https://expressjs.com/),[postgresql](https://www.postgresql.org/),[jest](https://jestjs.io/)
+
+---
+
+## 🚀 Getting Started
 
 * In your terminal go into a directory and then run the following command:
 
@@ -39,29 +38,18 @@ The News app offers a RESTful API which shows titles,topics,authors and many mor
         cd Hosting-NC-backend
 
 
-## Dependencies
-
-* dotenv >= 16
-* express >= 4.17
-* pg >= 8.7
-
-
-## Build Dependencies
-These Dependencies are only relevant if you want to build the source code:
-* husky >= 7.0
-* jest >= 27.5
-* jest-sorted >= 1.0.14
-* pg-format >= 1.0.4
-* supertest >= 6.2.2
-
-
-### Installing
-
-
 *Run this code in your terminal:
 
         npm i
 
+
+* After you have installed them setup your .env files for DB connection:
+
+        In order to access the correct database you will have to setup 2 seperated connections. 
+        Therefore you will have to create .env files where you declare the database name 
+        for the associated environment. 
+        You will find a .env-example file!
+        
 * Your package.json should include this:
 
          "scripts" {
@@ -73,7 +61,6 @@ These Dependencies are only relevant if you want to build the source code:
          npm run seed" "start": "node listen.js"
          }
 
-
 * Make sure you run these commands before testing:
 
         npm setup-dbs
@@ -82,11 +69,11 @@ These Dependencies are only relevant if you want to build the source code:
 
         npm test
    
-## Minimum Node.js & Postgres needed to run the project
+#### Minimum Node.js & Postgres needed to run the project
 * Node.js >= 17.2
 * psql >= 12.9(ubuntu)
     
-## API Reference
+### API Reference
 
 #### Get all end-points avaliable in the application
 
@@ -95,7 +82,8 @@ These Dependencies are only relevant if you want to build the source code:
 ```
 
 
-## Author
-
-Rajmund Noel Gyuris
+## 👊 Further Help?
+This is my first public back-end feel free to email/tweet me any questions , advices regarding this project
+Created by Rajmund Noel Gyuris [twitter](https://twitter.com/blamexcode),email:blameaimer@gmail.com 
+@2022
 
