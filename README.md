@@ -38,7 +38,7 @@ The News app offers a RESTful API which was built in NodeJS using [express](http
         cd Hosting-NC-backend
 
 
-*Run this code in your terminal:
+* Run this code in your terminal:
 
         npm i
 
@@ -80,10 +80,12 @@ The News app offers a RESTful API which was built in NodeJS using [express](http
 ```http
   GET /api
 ```
-
+---
 
 ## 👊 Further Help?
-This is my first public back-end feel free to email/tweet me any questions , advices regarding this project
-Created by Rajmund Noel Gyuris [twitter](https://twitter.com/blamexcode),email:blameaimer@gmail.com 
+This is my first public back-end project feel free to email/tweet me any questions , advices regarding this project
+Created by Rajmund Noel Gyuris [twitter](https://twitter.com/blamexcode)
+email:blameaimer@gmail.com 
+
 @2022
 
