@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmobile.twitter.com%2Fnorthcoders&psig=AOvVaw33nDAOqXvDcOh4boNJEH0x&ust=1646016994782000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKia8abxnvYCFQAAAAAdAAAAABAD" alt="NC LOGO" width="400" />
+  <img src="https://portswigger.net/cms/images/70/79/895d-article-200624-nodejs-body-text.png" alt="NodeJS LOGO" width="400" />
   <p></p>
   <h1>NC News</h1>
   <p></p>
