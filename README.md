@@ -37,7 +37,7 @@ The News app offers a RESTful API which was built in NodeJS using <br />
 
 * In your terminal go into a directory and then run the following command:
 
-        git clone https://github.com/blameaimer/Hosting-NC-backend
+        git clone https://github.com/blameaimer/Hosting-NC-NEWS
         cd Hosting-NC-backend
 
 
