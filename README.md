@@ -60,8 +60,6 @@ The News app offers a RESTful API which was built in NodeJS using <br />
          "seed": "node ./db/seeds/run-seed.js", 
          "test": "jest",  
          "prepare": "husky install",   
-         "seed:prod": "NODE_ENV=production DATABASE_URL=$(heroku config:get DATABASE_URL),
-         npm run seed" "start": "node listen.js"
          }
 
 * Make sure you run these commands before testing:
