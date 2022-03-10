@@ -20,7 +20,7 @@
     }},
   "GET /api/articles": {
     "description": "serves an array of all articles",
-    "queries": ["topic", "sort_by", "order","limit(default is 10)","p(page)"],
+    "queries": ["topic", "sort_by('created_at','votes','comment_count')", "order","limit(default is 10)","p(page)"],
     "exampleResponse": {
       "articles": [
         {
