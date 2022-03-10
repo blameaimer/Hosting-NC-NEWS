@@ -173,7 +173,7 @@ describe("/api/topics", () => {
       });
     })
 
-    test.only('test for descending order by title ', () => {
+    test('test for descending order by title ', () => {
       return request(app)
       .get("/api/articles?sort_by=comment_count")
       .expect(200)
