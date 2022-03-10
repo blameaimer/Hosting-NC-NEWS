@@ -7,7 +7,8 @@ exports.selectCommentsByArticleId = (id,limit=10,p) => {
   FROM comments
   JOIN articles ON comments.article_id = articles.article_id
  JOIN users ON comments.author = users.username
-  WHERE articles.article_id = ${[id]}`
+  WHERE articles.article_id = ${[id]} 
+  ORDER BY comments.created_at DESC`
 
   if(limit&&p){
     if(!Number(limit) || !Number(p)){

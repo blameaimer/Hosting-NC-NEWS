@@ -172,6 +172,13 @@ describe("/api/topics", () => {
         expect(response.body.articles).toBeSorted({key:'title',descending:true})
       });
     })
+
+    test.only('test for descending order by title ', () => {
+      return request(app)
+      .get("/api/articles?sort_by=comment_count")
+      .expect(200)
+     
+  })
   
   test('test for ascending order by date(default)', () => {
     return request(app)

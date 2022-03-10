@@ -47,8 +47,9 @@ let arr = [];
 
 strQuery += ` GROUP BY articles.article_id`
   if(sort_by||order){
-    strQuery+= ` ORDER BY articles.${[sort_by]} ${[order]}`
+    strQuery+= ` ORDER BY ${[sort_by]} ${[order]}`
   }
+  console.log(strQuery)
 if(limit&&p){
   if(!Number(limit) || !Number(p)){
  
