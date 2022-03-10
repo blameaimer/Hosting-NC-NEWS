@@ -27,7 +27,7 @@ GROUP BY articles.article_id,articles.author,title;`
 exports.selectArticles = (sort_by='created_at',order='desc',topic=null,limit=10,p) => {
 
 
-  const validsortby = ["created_at","article_id","title","topic","author","body","votes"]
+  const validsortby = ["created_at","article_id","title","topic","author","body","votes","comment_count"]
   if(!validsortby.includes(sort_by)){
       return Promise.reject({status: 400, msg: "Bad Request"});
 }
