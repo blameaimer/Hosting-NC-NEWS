@@ -26,7 +26,9 @@
 
 ## 👋 Intro
 
-The News app offers a RESTful API which was built in NodeJS using <br />
+The NC News offers a RESTful API which was built in NodeJS for the purpose to mimic a real world back end service(such as reddit) which provides the information to the front end architecture.
+
+Your database will be PSQL, and you will interact with it using node-postgres.<br />
 [express](https://expressjs.com/)<br />
 [postgresql](https://www.postgresql.org/)<br />
 [jest](https://jestjs.io/)
