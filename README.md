@@ -52,8 +52,10 @@ Your database will be PSQL, and you will interact with it using node-postgres.<b
         for the associated environment.
 
         You will find a .env-example file!
-        .env.development
-        .env.test
+        create
+        .env.development with PGDATABASE=nc_news
+        and
+        .env.test with PGDATABASE=nc_news_test
 
 
 
