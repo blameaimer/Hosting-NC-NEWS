@@ -23,7 +23,6 @@
 
 ---
 
-
 ## 👋 Intro
 
 The News app offers a RESTful API which was built in NodeJS using <br />
@@ -35,45 +34,50 @@ The News app offers a RESTful API which was built in NodeJS using <br />
 
 ## 🚀 Getting Started
 
-* In your terminal go into a directory and then run the following command:
+- In your terminal go into a directory and then run the following command:
 
         git clone https://github.com/blameaimer/Hosting-NC-NEWS
         cd Hosting-NC-NEWS
 
-
-* Run this code in your terminal:
+- Run this code in your terminal:
 
         npm i
 
+- After you have installed them setup your .env files for DB connection:
 
-* After you have installed them setup your .env files for DB connection:
+        In order to access the correct database you will have to setup 2 seperated connections.
+        Therefore you will have to create .env files where you declare the database name
+        for the associated environment.
 
-        In order to access the correct database you will have to setup 2 seperated connections. 
-        Therefore you will have to create .env files where you declare the database name 
-        for the associated environment. 
         You will find a .env-example file!
-        
-* Your package.json should include this:
+        .env.development
+        .env.test
+
+
+
+- Your package.json should include this:
 
          "scripts" {
-         "setup-dbs": "psql -f ./db/setup.sql",   
-         "seed": "node ./db/seeds/run-seed.js", 
-         "test": "jest",  
-         "prepare": "husky install",   
+         "setup-dbs": "psql -f ./db/setup.sql",
+         "seed": "node ./db/seeds/run-seed.js",
+         "test": "jest",
+         "prepare": "husky install",
          }
 
-* Make sure you run these commands before testing:
+- Make sure you run these commands before testing:
 
-        npm setup-dbs
-        npm seed
-* Now you can run the tests:
+        npm run setup-dbs
+        npm run seed
+
+- Now you can run the tests:
 
         npm test
-   
+
 #### Minimum Node.js & Postgres needed to run the project
-* Node.js >= 17.2
-* psql >= 12.9(ubuntu)
-    
+
+- Node.js >= 17.2
+- psql >= 12.9(ubuntu)
+
 ### API Reference
 
 #### Get all end-points avaliable in the application
@@ -81,15 +85,13 @@ The News app offers a RESTful API which was built in NodeJS using <br />
 ```http
   GET /api
 ```
+
 ---
 
 ## 👊 Further Help?
+
 This is my first public back-end project feel free to email me any questions , advices regarding this project <br />
-Created by Raymund Noel Gyuris <br />
+© Raymund Noel Gyuris <br />
 contact me via e-mail RaymundTech@protonmail.com <br/>
 
-
- 
 <br />
-
-
