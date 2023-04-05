@@ -12,7 +12,7 @@
   <p align="center">
     <a href="#-intro"><b>What is this?</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
-    <a href="https://nc-news-blame.herokuapp.com/api"><b>Hosted Version</b></a>
+    <a href="https://host-nc-news.onrender.com/api"><b>Hosted Version</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
     <a href="#-getting-started"><b>Usage</b></a>
     &nbsp;&nbsp;&mdash;&nbsp;&nbsp;
